@@ -1,0 +1,17 @@
+{
+  "name": "restify-learn",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js",
+    "start": "node server.js"
+  },
+  "author": "Eason Peng",
+  "license": "MIT",
+  "devDependencies": {
+    "get-pixels": "^3.3.0",
+    "mysql": "^2.15.0",
+    "restify": "^6.3.4"
+  }
+}
