@@ -6,42 +6,50 @@ var connection = mysql.createConnection({
     host: '127.0.0.1',
     user: 'root',
     password: '',
-    port: '3306'
+    port: '3306',
+    database: 'vue-images'
 })
 
-// connection.connect(function(err){
-//     if(err){
-//         console.log('[query] - :' + err);
-//         return
-//     }else{
-//         console.log('[connection connect] succedd!');
-//     }
-// })
-
-getPixels("./images/test-img1.png", function (err, pixels) {
-    if (err) {
-        console.log("Bad image path")
+connection.connect(function(err){
+    if(err){
+        console.log('[query] - :' + err);
         return
+    }else{
+        console.log('[connection connect] succedd!');
     }
-    console.log(pixels)
-    var pixels_in_hex_value = [];
-    var index = 0;
-    for (let i = 0; i < pixels.shape[0]; i++) {
-        for (let j = 0; j < pixels.shape[1]; j++) {
-            let str = "rgb(" + pixels.get(i, j, 0) + ','
-                + pixels.get(i, j, 1) + ','
-                + pixels.get(i, j, 2) + ')';
-            // console.log(str.colorHex());
-            pixels_in_hex_value[index] = str.colorHex();
-            index++;
-        }
-    }
-    console.log(pixels_in_hex_value.toString().length)
-    return
-    // console.log(pixels_in_hex_value.length)
-    // console.log('rgb(13,128,182)'.colorHex());
-
 })
+//查询
+connection.query('SELECT * FROM images-hex', function(err, rows, fields) {
+    if (err) throw err;
+    console.log('The solution is: ', rows[0]);
+});
+//关闭连接
+connection.end();
+
+// getPixels("./images/test-img1.png", function (err, pixels) {
+//     if (err) {
+//         console.log("Bad image path")
+//         return
+//     }
+//     console.log(pixels)
+//     var pixels_in_hex_value = [];
+//     var index = 0;
+//     for (let i = 0; i < pixels.shape[0]; i++) {
+//         for (let j = 0; j < pixels.shape[1]; j++) {
+//             let str = "rgb(" + pixels.get(i, j, 0) + ','
+//                 + pixels.get(i, j, 1) + ','
+//                 + pixels.get(i, j, 2) + ')';
+//             // console.log(str.colorHex());
+//             pixels_in_hex_value[index] = str.colorHex();
+//             index++;
+//         }
+//     }
+//     console.log(pixels_in_hex_value.toString())
+//     return
+//     // console.log(pixels_in_hex_value)
+//     // console.log('rgb(13,128,182)'.colorHex());
+
+// })
 
 var reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 /*RGB颜色转换为16进制*/
