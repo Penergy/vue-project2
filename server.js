@@ -7,15 +7,6 @@ var promise = new Promise(function () {
 });
 var image_path = "images";
 
-// db.getConnection(function (connection) {
-//   connection.beginTransaction(function (err) {
-//     if (err) {
-//       console.log(err);
-//       return;
-//     }
-//   })
-// })
-
 function respond(req, res, next) {
   res.send('hello ' + req.params.name);
   next();
@@ -24,18 +15,20 @@ function respond(req, res, next) {
 function findImage(req, res, next) {
   var model_name = req.path().split('/')[1];
   query('SELECT * FROM ' + model_name + ' WHERE id=' + req.params.imageId, [1], function (err, results, fields) {
-    // console.log(results[0].hex)
-    res.send(results[0].hex)
-
+    if(err){
+      res.send("Database fatal error");
+    }else{
+      res.send(results[0].hex);
+    }
   });
-  // console.log(model_name)
-  // console.log(req.params.imageId);
   next();
 }
 
 function InsertImage(req, res, next) {
   var model_name = req.path().split('/')[1];
-  console.log(req.params)
+  console.log(req.body)
+  res.send('ok');
+  next();
 }
 
 var server = restify.createServer();
@@ -48,8 +41,8 @@ server.pre(function (req, res, next) {
   return next();
 });
 
-server.use(restify.queryParser());
-server.use(restify.bodyParser());
+// server.use(restify.queryParser());
+server.use(restify.plugins.bodyParser());
 
 server.get('/hello/:name', respond);
 server.head('/hello/:name', respond);

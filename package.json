@@ -10,6 +10,7 @@
   "author": "Eason Peng",
   "license": "MIT",
   "devDependencies": {
+    "dtrace-provider": "^0.8.5",
     "get-pixels": "^3.3.0",
     "mysql": "^2.15.0",
     "restify": "^6.3.4"
