@@ -17,7 +17,8 @@ var image_path = "images";
 // })
 
 function respond(req, res, next) {
-  res.send('hello ' + req.params.name);
+  var messages = ['vue', 'Re: Vuejs', 'Re:Re: Vuevuejs'];
+  res.send(messages);
   next();
 }
 
@@ -48,8 +49,8 @@ server.pre(function (req, res, next) {
   return next();
 });
 
-server.use(restify.queryParser());
-server.use(restify.bodyParser());
+// server.use(restify.queryParser());
+// server.use(restify.bodyParser());
 
 server.get('/hello/:name', respond);
 server.head('/hello/:name', respond);
